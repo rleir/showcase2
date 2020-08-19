@@ -1,0 +1,75 @@
+#body1 {
+	background-color: rgb(34, 34, 34);
+	padding: 0;
+	margin: 0;
+}
+
+#center-back {
+	background-color: rgb(34, 34, 34);
+	color: rgb(220,220,220);
+	height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow-y: hidden;
+}
+
+@keyframes float {
+  from {bottom: -20vh;}
+  to {bottom: 120vh;}
+}
+
+.bokeh {
+	position: absolute;
+	bottom: 0;
+	border-radius: 100px;
+
+	animation-name: float;
+	animation-duration: 80s;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.light-layer {
+	position: absolute;
+	bottom: 0;
+	top: 0;
+	right: 0;
+	left: 0;
+	background-color: blue;
+	opacity: 0.1;
+	z-index: 3;
+}
+
+.main-elem {
+	position: relative;
+	left: 241px;
+	top: 151px;
+	width: 542px;
+	height: 392px;
+	background-color: rgb(115, 115, 115);
+  z-index: 100;
+  opacity: 0.3;
+}
+
+.acct-section1 {
+	position: fixed;
+	width: 30px;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	background-color: rgb(115, 115, 115);
+}
+
+.acct-section2 {
+	position: fixed;
+	width: 301px;
+	top: 60px;
+	bottom: 0;
+	right: 0;
+	background-color: rgb(115, 115, 115);
+	color: rgb(220,220,220);
+}
+
+.arrow {
+	position: relative;
+}
