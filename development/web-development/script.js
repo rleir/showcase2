@@ -1,7 +1,6 @@
 var INT_MIN_BRIGHTNESS = 102;
 var HEX_MIN_BRIGHTNESS = INT_MIN_BRIGHTNESS.toString(16);
 var MAX_BOKEHS = 100;
-var num_bokehs = 0;
 
 var BOKEH = {
   //diameter: [[90,100],[90,100],[45,50],[10,15],[4,5]],
@@ -15,15 +14,35 @@ var BOKEH = {
   duration: ["80s","65s","70s","110s","90s"]
 };
 
-function initBokeh() {
-  if (MAX_BOKEHS <= num_bokehs){
-    var temp = document.getElementById("center-back");
-    var i = 0;
-    while (i < temp.childNodes.length
-      && temp.childNodes[i].className !== "bokeh"){
+var num_bokehs = 0;
+var paused = false;
+
+function removeFirstOf(parent, child){
+  var temp = document.getElementById(parent);
+  var i = 0;
+  while (i < temp.childNodes.length
+    && temp.childNodes[i].className !== child){
+    i++;
+  }
+  temp.removeChild(temp.childNodes[i]);
+}
+
+function removeAllOf(parent, child){
+  var temp = document.getElementById(parent);
+  var i = 0;
+  while (i < temp.childNodes.length){
+    if (temp.childNodes[i].className === child){
+    temp.removeChild(temp.childNodes[i]);
+    }
+    else{
       i++;
     }
-    temp.removeChild(temp.childNodes[i]);
+  }
+}
+
+function initBokeh() {
+  if (MAX_BOKEHS <= num_bokehs){
+    removeFirstOf("center-back", "bokeh")
   } else {
     num_bokehs++;
   }
@@ -92,15 +111,81 @@ function initBokeh() {
   //document.write(MIN_OPACITY + opac * (1 - MIN_OPACITY));
 }
 
+function pauseBokehs(){
+  if (!paused){
+    paused = true;
+    var temp = document.getElementById("center-back");
+    var i = 0;
+    while (i < temp.childNodes.length){
+      if (temp.childNodes[i].className === "bokeh"){
+        temp.childNodes[i].style.webkitAnimationPlayState = "paused";
+      }
+      i++;
+    }
+  }
+}
+
+function stopBokehs(){
+  paused = true;
+  removeAllOf("center-back", "bokeh");
+}
+
+function playBokehs(){
+  if (paused){
+    paused = false;
+    var temp = document.getElementById("center-back");
+    var i = 0;
+    while (i < temp.childNodes.length){
+      if (temp.childNodes[i].className === "bokeh"){
+        temp.childNodes[i].style.webkitAnimationPlayState = "running";
+      }
+      i++;
+    }
+  }
+}
+
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function startBokeh(){
   while(true){
+    while(paused){
+      await sleep(500);
+    }
     while(Math.random() < 0.3){
       initBokeh();
     }
     await sleep(500);
   }
+}
+
+function scaleElement(scale, element_Id){
+  var element = document.getElementById(element_Id);
+  element.style.height = scale;
+  element.style.width = scale;
+}
+
+function growPlay(){
+  scaleElement("80px", "play-button");
+  scaleElement("30px", "stop-button");
+  scaleElement("30px", "pause-button");
+}
+
+function growPause(){
+  scaleElement("80px", "pause-button");
+  scaleElement("30px", "stop-button");
+  scaleElement("30px", "play-button");
+}
+
+function growStop(){
+  scaleElement("80px", "stop-button");
+  scaleElement("30px", "pause-button");
+  scaleElement("30px", "play-button");
+}
+
+function shrinkButtons(){
+  scaleElement("50px", "play-button");
+  scaleElement("50px", "stop-button");
+  scaleElement("50px", "pause-button");
 }

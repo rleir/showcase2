@@ -2,17 +2,31 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>repl.it</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body id="body1" onload="startBokeh()">
     <script src="script.js"></script>
 
-      <div id="center-back">
+    <div id="center-back">
+      <img src="images/logo.png" class="logo-display"></img>
+      <div class="title-display"></div>
       <div class="light-layer"></div>
       <!-- <div class="main-elem"></div> -->
+      <div id="pause-hov" onmouseover="growPause()" onmouseout="shrinkButtons()">
+        <img src="images/pause_button.png"
+        id="pause-button" onclick="pauseBokehs()"></img>
+      </div>
+      <div id="play-hov" onmouseover="growPlay()" onmouseout="shrinkButtons()">
+        <img src="images/play_button.png" id="play-button" onclick="playBokehs()">
+        </img>
+      </div>
+      <div id="stop-hov" onmouseover="growStop()" onmouseout="shrinkButtons()">
+        <img src="images/stop_button.png"
+        id="stop-button" onclick="stopBokehs()"></img>
+      </div>
+      <div class="acct-section1"></div>
     </div>
-    <!-- <div class="acct-section1"></div> -->
   </body>
 </html>
